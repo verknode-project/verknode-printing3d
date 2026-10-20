@@ -1,0 +1,7 @@
+# verknode's checks of a package (validate: entry point, API range, nodes, factories), and the tests, against the
+# newest verknode - the checks themselves are verknode's, so they evolve with it
+name: CI
+on: [push, pull_request, workflow_dispatch]
+jobs:
+  check:
+    uses: verknode-project/verknode/.github/workflows/package-check.yml@main

@@ -1,0 +1,7 @@
+# a tag vX.Y.Z: the wheel on a GitHub release - verknode's package index picks the release up by itself
+name: Release
+on: {push: {tags: ["v*"]}}
+permissions: {contents: write}
+jobs:
+  release:
+    uses: verknode-project/verknode/.github/workflows/package-release.yml@main

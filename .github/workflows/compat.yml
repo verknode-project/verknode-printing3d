@@ -1,0 +1,10 @@
+# every week: does the package work with the newest verknode? If verknode's node API got a new major version and
+# the checks pass with it, a pull request widens the package's API range (verknode's automated-update policy)
+name: Compatibility
+on:
+  schedule: [{cron: "17 4 * * 1"}]
+  workflow_dispatch:
+permissions: {contents: write, pull-requests: write}
+jobs:
+  compat:
+    uses: verknode-project/verknode/.github/workflows/package-compat.yml@main
