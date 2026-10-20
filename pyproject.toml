@@ -20,6 +20,7 @@ dependencies = [
     "rtree>=1.0",            # sections of larger meshes (trimesh)
     "scipy>=1.10",           # trimesh: geometry (convex hulls, proximity)
     "networkx>=3.0",         # trimesh: graphs (bodies, watertight checks)
+    "lxml>=4.9",             # trimesh: 3MF files
     "manifold3d>=2.4",       # booleans
     "mapbox-earcut>=1.0",    # extrusions
     "ezdxf>=1.1",            # DXF drawings
