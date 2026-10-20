@@ -32,12 +32,14 @@ restart. Or:
 - **The built-in slicer** is for simple parts and for showing the workflow. For production prints, slice
   with PrusaSlicer, Cura or OrcaSlicer, and read their G-code with G-code Reader.
 
-`examples/printing3d.vkf` puts it together: a part made of shapes, a boolean, the editor, the slicer, the
-statistics and the viewers.
+The example workflow puts it together: a part made of shapes, a boolean, the editor, the slicer, the
+statistics and the viewers. To open it: **≡ Settings › Packages › 3D Printing › Examples**. It is copied,
+with its data, into `verknode-examples/printing3d/`, so you can change it.
 
 ## Versions
 
-- **Node API:** the package works with verknode's node API `>=1.0,<2` (`[tool.verknode] api`).
+- **Node API:** the package works with verknode's node API `>=1.1,<2` (`[tool.verknode] api`). Version
+  0.1.0 needed only 1.0, so a verknode with node API 1.0 is offered 0.1.0 from the index.
 - **Compatibility, every week:** the Compatibility workflow checks the package against the newest
   verknode. When verknode's API gets a new major version and the checks pass, it opens a pull request
   that widens the range.

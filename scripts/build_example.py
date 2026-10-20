@@ -1,6 +1,8 @@
-"""Makes examples/printing3d.vkf (and its data: a DXF drawing and an STL part) with verknode's Python API.
+"""Makes the package's example workflow, src/verknode_printing3d/examples/printing3d.vkf (and its data: a DXF
+drawing and an STL part), with verknode's Python API. verknode's Settings › Packages › Examples copies them
+into the user's workspace.
 
-    python examples/build_example.py        # verknode and this package importable
+    python scripts/build_example.py        # verknode and this package importable
 """
 import os
 
@@ -9,7 +11,7 @@ import trimesh
 
 from jupyterlab_verknode.standalone import Workflow
 
-HERE = os.path.dirname(os.path.abspath(__file__))
+HERE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src", "verknode_printing3d", "examples")
 DATA = os.path.join(HERE, "data")
 os.makedirs(DATA, exist_ok=True)
 

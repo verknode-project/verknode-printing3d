@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "verknode-printing3d"
-version = "0.1.0"
+version = "0.1.1"
 description = "3D printing for verknode: meshes and CAD files, modelling, a slicer, G-code, 3D viewers and editors"
 readme = "README.md"
 license = "Apache-2.0"
@@ -40,7 +40,7 @@ printing3d = "verknode_printing3d:package"
 
 # the versions of verknode's node API it works with (the same as API in verknode_printing3d/__init__.py)
 [tool.verknode]
-api = ">=1.0,<2"
+api = ">=1.1,<2"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/verknode_printing3d"]

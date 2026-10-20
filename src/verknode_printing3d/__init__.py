@@ -11,7 +11,7 @@ except PackageNotFoundError:  # (from a source folder)
     __version__ = "0.0.0"
 
 #: the versions of verknode's node API this package works with (also [tool.verknode] api in pyproject.toml)
-API = ">=1.0,<2"
+API = ">=1.1,<2"  # (1.1: examples)
 
 package = Package(
     name="printing3d",
@@ -23,6 +23,7 @@ package = Package(
     modules=["verknode_printing3d.nodes.io", "verknode_printing3d.nodes.modeling",
              "verknode_printing3d.nodes.printing", "verknode_printing3d.nodes.views"],
     static="static",
+    examples="examples",
     homepage="https://github.com/verknode-project/verknode-printing3d",
 )
 
