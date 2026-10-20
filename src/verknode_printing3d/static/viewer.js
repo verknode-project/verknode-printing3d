@@ -183,8 +183,6 @@ export function gcodeView(el, data, opts) {
   const positions = new Float32Array(n * 6);
   const colors = new Float32Array(n * 6);
   const col = new THREE.Color();
-  const order = [];
-  for (let i = 0; i < n; i++) order.push(i);
   let shown = 0;
   const build = maxLayer => {
     shown = 0;
