@@ -3,6 +3,8 @@
 3D printing for [verknode](https://github.com/verknode-project/verknode): read meshes and CAD files, model and
 fix parts, slice them, and work with G-code, with 3D viewers and editors on the canvas.
 
+![The example workflow: a block with a hole made of shapes and a boolean, placed by hand in the Mesh Editor; sliced for the printer, its toolpaths layer by layer, print time and filament; a DXF drawing extruded and an STL knob combined on the build plate in the Mesh Viewer](docs/hero.png)
+
 It is also verknode's example of a **package**: a set of nodes, a port type, canvas widgets, views and
 node defaults, distributed by itself and installed into verknode from its package manager (see verknode's
 [docs/packages.md](https://github.com/verknode-project/verknode/blob/main/docs/packages.md)).
@@ -54,6 +56,10 @@ with its data, into `verknode-examples/printing3d/`, so you can change it.
     pip install -e ".[test]"        # next to a verknode (its Python on the path)
     pytest
     python -m jupyterlab_verknode.packages validate .
+
+## Changes
+
+See [CHANGELOG.md](CHANGELOG.md).
 
 ## License
 
