@@ -33,40 +33,40 @@ knob.export(os.path.join(DATA, "knob.stl"))
 wf = Workflow(base_dir=HERE)
 g = wf.engine
 # 1. a part made of shapes: a block with a hole, placed by hand in the editor, measured
-block = wf.add_node("Shape", "Block 40 x 40 x 12", at=(80, 120), shape="Box", x=40, y=40, z=12)
-hole = wf.add_node("Shape", "Hole r 8", at=(80, 260), shape="Cylinder", radius=8, z=30)
-cut = wf.add_node("Mesh Boolean", "Block minus hole", at=(260, 180), operation="Difference (A - B)")
+block = wf.add_node("Shape", "Block 40 x 40 x 12", at=(40, 100), shape="Box", x=40, y=40, z=12)
+hole = wf.add_node("Shape", "Hole r 8", at=(40, 230), shape="Cylinder", radius=8, z=30)
+cut = wf.add_node("Mesh Boolean", "Block minus hole", at=(160, 165), operation="Difference (A - B)")
 wf.connect(block, cut, 1, 1)
 wf.connect(hole, cut, 1, 2)
-editor = wf.add_node("Mesh Editor", "Place it", at=(430, 180), title="Mesh Editor: drag, rotate (R), scale (S)",
+editor = wf.add_node("Mesh Editor", "Place it", at=(280, 165), title="Mesh Editor: drag, rotate (R), scale (S)",
                      selection={"position": [110, 110, 6], "rotation": [0, 0, 30], "scale": [1, 1, 1], "drop": True})
 wf.connect(cut, editor)
-info = wf.add_node("Mesh Info", "Measure", at=(620, 120))
+info = wf.add_node("Mesh Info", "Measure", at=(400, 110))
 wf.connect(editor, info, 2, 1)
-info_view = wf.add_node("Table Display", "Mesh info", at=(780, 60), title="The placed part")
+info_view = wf.add_node("Table Display", "Mesh info", at=(400, 230), title="The placed part")
 wf.connect(info, info_view)
-stl = wf.add_node("Mesh Writer", "Save STL", at=(620, 260), path="output/block.stl")
+stl = wf.add_node("Mesh Writer", "Save STL", at=(400, 330), path="output/block.stl")
 wf.connect(editor, stl, 2, 1)
 # 2. sliced: G-code, its statistics and toolpaths
-slicer = wf.add_node("Slicer", "Slice (0.2 mm, 20 %)", at=(620, 420), layer_height=0.2, infill=20, center=False)
+slicer = wf.add_node("Slicer", "Slice (0.2 mm, 20 %)", at=(40, 460), layer_height=0.2, infill=20, center=False)
 wf.connect(editor, slicer, 2, 1)
-stats = wf.add_node("G-code Stats", "Print time, filament", at=(800, 420))
+stats = wf.add_node("G-code Stats", "Print time, filament", at=(160, 460))
 wf.connect(slicer, stats)
-stats_view = wf.add_node("Table Display", "Print", at=(980, 360), title="Print time and filament")
+stats_view = wf.add_node("Table Display", "Print", at=(280, 460), title="Print time and filament")
 wf.connect(stats, stats_view)
-gview = wf.add_node("G-code Viewer", "Toolpaths", at=(800, 560), title="G-code: layer by layer")
+gview = wf.add_node("G-code Viewer", "Toolpaths", at=(160, 570), title="G-code: layer by layer")
 wf.connect(slicer, gview)
-gcode = wf.add_node("G-code Writer", "Save G-code", at=(980, 560), path="output/block.gcode")
+gcode = wf.add_node("G-code Writer", "Save G-code", at=(280, 570), path="output/block.gcode")
 wf.connect(slicer, gcode)
 # 3. from files: a 2D drawing extruded, an STL part, combined on the plate
-dxf = wf.add_node("DXF Reader", "Plate drawing", at=(80, 720), path="data/plate.dxf")
-plate = wf.add_node("Extrude Outline", "Extrude 4 mm", at=(260, 720), height=4, name="plate")
+dxf = wf.add_node("DXF Reader", "Plate drawing", at=(40, 700), path="data/plate.dxf")
+plate = wf.add_node("Extrude Outline", "Extrude 4 mm", at=(160, 700), height=4, name="plate")
 wf.connect(dxf, plate)
-knob_r = wf.add_node("Mesh Reader", "Knob (STL)", at=(80, 860), path="data/knob.stl")
-both = wf.add_node("Mesh Combine", "On the plate", at=(430, 790), gap=8)
+knob_r = wf.add_node("Mesh Reader", "Knob (STL)", at=(40, 820), path="data/knob.stl")
+both = wf.add_node("Mesh Combine", "On the plate", at=(280, 760), gap=8)
 wf.connect(plate, both, 1, 1)
 wf.connect(knob_r, both, 1, 2)
-viewer = wf.add_node("Mesh Viewer", "3D view", at=(620, 790), title="Plate and knob, on the build plate")
+viewer = wf.add_node("Mesh Viewer", "3D view", at=(400, 760), title="Plate and knob, on the build plate")
 wf.connect(both, viewer)
 g.add_group([block.id, hole.id, cut.id, editor.id, info.id, info_view.id, stl.id],
             "A part from shapes: a boolean, placed by hand in the Mesh Editor, measured, saved as STL", "#e07b00")
@@ -74,6 +74,14 @@ g.add_group([slicer.id, stats.id, stats_view.id, gview.id, gcode.id],
             "Sliced for the printer of Settings › Node defaults › 3D printer: G-code, time, filament, toolpaths", "#3d9be9")
 g.add_group([dxf.id, plate.id, knob_r.id, both.id, viewer.id],
             "From CAD files: a DXF drawing extruded, an STL part, combined on the plate", "#4caf50")
+# the displays: four panels next to the nodes (the editor, the toolpaths, the 3D view, the numbers)
+g.set_widget_layouts([
+    {"id": editor.id, "layout": {"side": "free", "x": 560, "y": 40, "w": 460, "h": 340}},
+    {"id": gview.id, "layout": {"side": "free", "x": 1040, "y": 40, "w": 460, "h": 340}},
+    {"id": viewer.id, "layout": {"side": "free", "x": 560, "y": 520, "w": 460, "h": 330}},
+    {"id": info_view.id, "layout": {"side": "free", "x": 1040, "y": 520, "w": 460, "h": 120}},
+    {"id": stats_view.id, "layout": {"side": "free", "x": 1040, "y": 660, "w": 460, "h": 120}},
+])
 results = wf.run(check=False)
 bad = [r for r in results if r.get("state") not in (None, "EXECUTED")]
 print("ran", len(results), "nodes;", "problems:", bad[:3])

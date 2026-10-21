@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.2
+
+- The example comes with its results, made by this version: it opens executed.
+- A new layout for the example: the nodes on the left; the editor, the toolpaths, the 3D view and the numbers
+  as panels next to them.
+- G-code Viewer: the view frames the toolpaths, not the origin.
+
 ## 0.1.1
 
 - Examples come with the package: Settings › Packages › 3D Printing › Examples opens them. This needs

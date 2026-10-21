@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "verknode-printing3d"
-version = "0.1.1"
+version = "0.1.2"
 description = "3D printing for verknode: meshes and CAD files, modelling, a slicer, G-code, 3D viewers and editors"
 readme = "README.md"
 license = "Apache-2.0"

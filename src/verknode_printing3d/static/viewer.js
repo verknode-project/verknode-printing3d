@@ -45,8 +45,8 @@ function stage(el, opts) {
   };
   new ResizeObserver(resize).observe(el);
   resize();
-  const frame = obj => {
-    const b = new THREE.Box3().setFromObject(obj);
+  const frame = obj => frameBox(new THREE.Box3().setFromObject(obj));
+  const frameBox = b => {
     const c = b.getCenter(new THREE.Vector3());
     const r = Math.max(b.getSize(new THREE.Vector3()).length() / 2, 10);
     camera.position.set(c.x + r * 1.6, c.y - r * 2.2, c.z + r * 1.4);
@@ -59,7 +59,7 @@ function stage(el, opts) {
     requestAnimationFrame(loop);
   };
   requestAnimationFrame(loop);
-  return { renderer, scene, camera, controls, frame, bed: [bx, by, bz] };
+  return { renderer, scene, camera, controls, frame, frameBox, bed: [bx, by, bz] };
 }
 
 function meshObject(data, color) {
@@ -204,8 +204,12 @@ export function gcodeView(el, data, opts) {
   const lines = new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ vertexColors: true }));
   s.scene.add(lines);
   build(data.maxLayer);
-  geo.computeBoundingBox();
-  s.frame(lines);
+  // (the moves drawn, not the whole buffer: its unused end is zeros, which would put the origin in the view)
+  const box = new THREE.Box3();
+  const v = new THREE.Vector3();
+  for (let i = 0; i < shown * 2; i++) box.expandByPoint(v.fromArray(positions, i * 3));
+  geo.boundingSphere = box.getBoundingSphere(new THREE.Sphere());
+  s.frameBox(box);
   const bar = document.createElement('div');
   bar.style.cssText = 'position:absolute;left:6px;right:6px;top:6px;display:flex;gap:6px;align-items:center;font-size:11px';
   const slider = document.createElement('input');
